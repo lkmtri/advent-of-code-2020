@@ -7,40 +7,39 @@ const readInput = () => {
 };
 
 const parseInput = () => {
-  const input = readInput().split('\n')
-  
-  return input.map((line) => {
-    const [instruction, val] = line.split(' ')
+  const input = readInput().split("\n");
 
-    if (instruction === 'nop') {
-      return ['jump', 1]
+  return input.map((line) => {
+    const [instruction, val] = line.split(" ");
+
+    if (instruction === "nop") {
+      return ["jump", 1];
     }
 
-    return [instruction, Number(val)]
-  })
+    return [instruction, Number(val)];
+  });
 };
 
 const solve = () => {
-  const rules =  parseInput()
-  const visited = {}
+  const rules = parseInput();
+  const visited = {};
 
-  let acc = 0
-  let idx = 0
+  let acc = 0;
+  let idx = 0;
 
   while (!visited[idx]) {
-    const [instruction, val] = rules[idx]
-    visited[idx] = true
+    const [instruction, val] = rules[idx];
+    visited[idx] = true;
 
-    if (instruction === 'acc') {
-      acc += val
-      idx++
+    if (instruction === "acc") {
+      acc += val;
+      idx++;
     } else {
-      idx += val
+      idx += val;
     }
   }
 
-  return acc
-}
-
+  return acc;
+};
 
 console.log(solve());

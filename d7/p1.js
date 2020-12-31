@@ -8,59 +8,68 @@ const readInput = () => {
 
 const parseInput = () => {
   const getBag = (str) => {
-    const [quantity, ...name] = str.split(' ')
-    return [Number(quantity), name.join(' ')]
-  }
+    const [quantity, ...name] = str.split(" ");
+    return [Number(quantity), name.join(" ")];
+  };
   let input = readInput()
     .split(".\n")
     .map((rule) => {
-      let [bag, content] = rule.split('.').join(' ').split(/bags?/).join(' ').split('contain').map((cur) => cur.trim())
-      if (content === 'no other') {
-        return
+      let [bag, content] = rule
+        .split(".")
+        .join(" ")
+        .split(/bags?/)
+        .join(" ")
+        .split("contain")
+        .map((cur) => cur.trim());
+      if (content === "no other") {
+        return;
       }
-      content = content.split(',').map((cur) => cur.trim()).map(getBag)
-      return [bag, content]
-    }).filter(Boolean)
+      content = content
+        .split(",")
+        .map((cur) => cur.trim())
+        .map(getBag);
+      return [bag, content];
+    })
+    .filter(Boolean);
 
   return input;
 };
 
 const solve = () => {
-  const rules =  parseInput()
-  const map = {}
-  const outermost = {}
+  const rules = parseInput();
+  const map = {};
+  const outermost = {};
 
   rules.forEach(([bag, content]) => {
-    outermost[bag] = true
+    outermost[bag] = true;
     content.forEach(([, name]) => {
-      map[name] = map[name] || []
-      map[name].push(bag)
-    })
-  })
+      map[name] = map[name] || [];
+      map[name].push(bag);
+    });
+  });
 
-  const queue = ['shiny gold']
+  const queue = ["shiny gold"];
   const visited = {
-    'shiny gold': true
-  }
+    "shiny gold": true,
+  };
 
-  const ans = {}
+  const ans = {};
 
   while (queue.length) {
     const cur = queue.shift();
 
     (map[cur] || []).forEach((next) => {
       if (outermost[next]) {
-        ans[next] = true
+        ans[next] = true;
       }
 
       if (!visited[next]) {
-        queue.push(next)
+        queue.push(next);
       }
-    })
+    });
   }
 
-  return Object.keys(ans).length
-}
-
+  return Object.keys(ans).length;
+};
 
 console.log(solve());
