@@ -21,7 +21,7 @@ const solve = () => {
   let [px, py] = [0, 0];
 
   function rotate([cx, cy], [x, y], angle) {
-    var radians = (Math.PI / 180) * angle,
+    const radians = (Math.PI / 180) * angle,
       cos = Math.cos(radians),
       sin = Math.sin(radians),
       nx = cos * (x - cx) + sin * (y - cy) + cx,
@@ -65,7 +65,6 @@ const solve = () => {
 
   input.forEach(([m, v]) => {
     [[px, py], [x, y]] = getNextState([px, py], [x, y], [m, v]);
-    console.log([m, v], [px, py], [x, y]);
   });
 
   return Math.abs(Math.round(px)) + Math.abs(Math.round(py));
