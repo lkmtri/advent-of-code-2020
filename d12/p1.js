@@ -17,8 +17,6 @@ const parseInput = () => {
 const solve = () => {
   const input = parseInput();
 
-  let [x, y, dir] = [0, 0, 0];
-
   const getDirection = (degree) => {
     const radian = (degree / 180) * Math.PI;
     return [Math.round(Math.cos(radian)), Math.round(Math.sin(radian))];
@@ -44,9 +42,7 @@ const solve = () => {
     }
   };
 
-  input.forEach(([m, v]) => {
-    [x, y, dir] = getNextState([x, y, dir], [m, v]);
-  });
+  const [x, y] = input.reduce(getNextState, [0, 0, 0]);
 
   return Math.abs(x) + Math.abs(y);
 };

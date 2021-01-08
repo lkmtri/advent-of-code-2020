@@ -17,19 +17,16 @@ const parseInput = () => {
 const solve = () => {
   const input = parseInput();
 
-  let [x, y] = [10, 1];
-  let [px, py] = [0, 0];
-
-  function rotate([cx, cy], [x, y], angle) {
+  const rotate = ([cx, cy], [x, y], angle) => {
     const radians = (Math.PI / 180) * angle,
       cos = Math.cos(radians),
       sin = Math.sin(radians),
       nx = cos * (x - cx) + sin * (y - cy) + cx,
       ny = cos * (y - cy) - sin * (x - cx) + cy;
     return [Math.round(nx), Math.round(ny)];
-  }
+  };
 
-  const getNextState = ([curPx, curPy], [curX, curY], [move, value]) => {
+  const getNextState = ([[curPx, curPy], [curX, curY]], [move, value]) => {
     switch (move) {
       case "N":
         return [
@@ -63,9 +60,10 @@ const solve = () => {
     }
   };
 
-  input.forEach(([m, v]) => {
-    [[px, py], [x, y]] = getNextState([px, py], [x, y], [m, v]);
-  });
+  const [[px, py]] = input.reduce(getNextState, [
+    [0, 0],
+    [10, 1],
+  ]);
 
   return Math.abs(Math.round(px)) + Math.abs(Math.round(py));
 };
